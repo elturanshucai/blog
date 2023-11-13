@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { images } from '../constants'
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai"
@@ -27,7 +27,7 @@ const NavItem = ({ item }) => {
                 <>
                     <Link to={item.path} className='px-3 py-2 group-hover:text-blue-500 transition-all duration-500 flex items-center gap-1'>
                         <span>{item.name}</span>
-                        <MdKeyboardArrowDown/>
+                        <MdKeyboardArrowDown />
                     </Link>
                     <div className="hidden transition-all duration-500 pt-4 absolute bottom-0 left-0 translate-y-full group-hover:block w-max group-hover:left-20 group-hover:translate-y-1 lg:group-hover:left-0 lg:group-hover:translate-y-full">
                         <ul className='flex flex-col shadow-lg rounded-lg overflow-hidden'>
@@ -43,13 +43,22 @@ const NavItem = ({ item }) => {
 
 export default function Header() {
     const [navVisible, setNavVisible] = useState(false)
+    const [top, setTop] = useState(true)
     const navVisibleHandler = () => {
         setNavVisible((curState) => {
             return !curState
         })
     }
+
+    useEffect(() => {
+        const scrollHandler = () => {
+            window.scrollY > 10 ? setTop(false) : setTop(true)
+        }
+        window.addEventListener('scroll', scrollHandler)
+        return () => window.removeEventListener('scroll', scrollHandler)
+    }, [top])
     return (
-        <section>
+        <section className={`sticky top-0 left-0 right-0 z-50 bg-white ${top ? "" : "shadow-md"}`}>
             <header className='container mx-auto px-5 flex justify-between py-4 items-center'>
                 <div>
                     <img src={images.Logo} alt="logo" className='w-20 cursor-pointer' />
