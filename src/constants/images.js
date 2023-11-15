@@ -5,6 +5,7 @@ import CardImage2 from "../assets/article2.jpg"
 import CardImage3 from "../assets/article3.jpg"
 import ProfileImage1 from "../assets/profile1.jpg"
 import ProfileImage2 from "../assets/profile2.jpg"
+import Facebook from "../assets/fb.png"
 
 const images = {
     Logo,
@@ -13,7 +14,8 @@ const images = {
     CardImage2,
     CardImage3,
     ProfileImage1,
-    ProfileImage2
+    ProfileImage2,
+    Facebook
 }
 
 export default images;

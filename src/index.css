@@ -2,3 +2,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.curved-border{
+    width: 100%;
+    position: relative;
+    background-color: #0D2436;
+    overflow: hidden;
+}
+.curved-border::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}

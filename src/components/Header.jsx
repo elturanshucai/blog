@@ -25,10 +25,10 @@ const NavItem = ({ item }) => {
                     <span className='text-blue-500 absolute transition-all duration-500 font-bold right-0 top-0 opacity-0 group-hover:right-[90%] group-hover:opacity-100'>/</span>
                 </> :
                 <>
-                    <Link to={item.path} className='px-3 py-2 group-hover:text-blue-500 transition-all duration-500 flex items-center gap-1'>
+                    <div className='px-3 py-2 group-hover:text-blue-500 transition-all duration-500 flex items-center gap-1'>
                         <span>{item.name}</span>
                         <MdKeyboardArrowDown />
-                    </Link>
+                    </div>
                     <div className="hidden transition-all duration-500 pt-4 absolute bottom-0 left-0 translate-y-full group-hover:block w-max group-hover:left-20 group-hover:translate-y-1 lg:group-hover:left-0 lg:group-hover:translate-y-full">
                         <ul className='flex flex-col shadow-lg rounded-lg overflow-hidden md:bg-white'>
                             {item.items.map(link => (
