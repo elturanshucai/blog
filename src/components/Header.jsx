@@ -32,7 +32,7 @@ const NavItem = ({ item }) => {
                     <div className="hidden transition-all duration-500 pt-4 absolute bottom-0 left-0 translate-y-full group-hover:block w-max group-hover:left-20 group-hover:translate-y-1 lg:group-hover:left-0 lg:group-hover:translate-y-full">
                         <ul className='flex flex-col shadow-lg rounded-lg overflow-hidden md:bg-white'>
                             {item.items.map(link => (
-                                <Link to={link.path} className='hover:bg-dark-hard hover:text-white px-4 py-2 text-white lg:text-dark-soft'>{link.name}</Link>
+                                <Link to={link.path} key={link.path} className='hover:bg-dark-hard hover:text-white px-4 py-2 text-white lg:text-dark-soft'>{link.name}</Link>
                             ))}
                         </ul>
                     </div>
