@@ -3,13 +3,14 @@
 @tailwind components;
 @tailwind utilities;
 
-.curved-border{
+.curved-border {
     width: 100%;
     position: relative;
     background-color: #0D2436;
     overflow: hidden;
 }
-.curved-border::before{
+
+.curved-border::before {
     content: '';
     position: absolute;
     top: 0;
@@ -19,4 +20,24 @@
     border: none;
     border-radius: 50%;
     transform: translateY(-50%);
+}
+
+@keyframes open {
+    0% {
+        height: 0;
+    }
+
+    50% {
+        height: 200px;
+    }
+
+    100% {
+        height: fit-content;
+    }
+}
+
+.my-form {
+    animation-duration: 1s;
+    overflow: hidden;
+    animation-name: open;
 }

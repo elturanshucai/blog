@@ -4,6 +4,7 @@ import BreadCrumbs from '../../components/BreadCrumbs'
 import { images } from '../../constants'
 import { Link } from 'react-router-dom'
 import SuggestedPosts from './container/SuggestedPosts'
+import CommentsContainer from '../../components/comments/CommentsContainer'
 
 const BreadCrumbData = [
     { name: "Home", link: "/" },
@@ -55,6 +56,10 @@ export default function ArticleDetail() {
                     <div className='mt-4 text-dark-soft'>
                         <p className='leading-7'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ratione explicabo quas fugiat excepturi assumenda at aperiam provident cum maiores magnam. Quia architecto, natus dolor itaque, laboriosam qui unde repellat consectetur cupiditate distinctio eaque eum, labore nemo odit iusto earum harum.</p>
                     </div>
+                    <CommentsContainer
+                        className="mt-10"
+                        logginedUserId="a"
+                    />
                 </article>
                 <SuggestedPosts
                     header="Latest Article"
