@@ -5,6 +5,7 @@ import { images } from '../../constants'
 import { Link } from 'react-router-dom'
 import SuggestedPosts from './container/SuggestedPosts'
 import CommentsContainer from '../../components/comments/CommentsContainer'
+import SocialShareButtons from '../../components/SocialShareButtons'
 
 const BreadCrumbData = [
     { name: "Home", link: "/" },
@@ -61,12 +62,21 @@ export default function ArticleDetail() {
                         logginedUserId="a"
                     />
                 </article>
-                <SuggestedPosts
-                    header="Latest Article"
-                    posts={suggPosts}
-                    tags={tagsData}
-                    className="mt-8 lg:mt-0 lg:max-w-xs"
-                />
+                <div>
+                    <SuggestedPosts
+                        header="Latest Article"
+                        posts={suggPosts}
+                        tags={tagsData}
+                        className="mt-8 lg:mt-0 lg:max-w-xs"
+                    />
+                    <div className='mt-7'>
+                        <h2 className='font-roboto font-medium text-dark-hard mb-4 md:text-xl'>Share on:</h2>
+                        <SocialShareButtons
+                            url={encodeURI("https://elturan.netlify.app/")}
+                            title={encodeURIComponent("Elturan Portfolio")}
+                        />
+                    </div>
+                </div>
             </section>
         </MainLayout>
     )

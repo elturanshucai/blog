@@ -14,7 +14,7 @@ export default function CommentForm({
     }
     return (
         <form onSubmit={handleSubmit} className={`my-form`}>
-            <div className='flex flex-col items-end border border-primary rounded-lg p-4 mx-auto w-[90%] text-xs md:text-base'>
+            <div className='flex flex-col items-end border border-primary rounded-lg p-4 text-xs md:text-base'>
                 <textarea
                     className='w-full focus:outline-none bg-transparent'
                     placeholder='Leave your comment here...'
@@ -22,7 +22,7 @@ export default function CommentForm({
                     value={text}
                     onChange={e => setText(e.target.value)}
                 />
-                <div className='flex items-center gap-x-2 pt-2'>
+                <div className='flex  items-center gap-x-2 pt-2'>
                     {formCancelHandler &&
                         <button
                             className='px-2 py-1 rounded-lg bg-red-700 text-white font-semibold mt-2 md:px-6 md:py-2.5'
