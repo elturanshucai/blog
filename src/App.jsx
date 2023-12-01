@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from "./pages/home/Home"
 import ArticleDetail from './pages/articleDetail/ArticleDetail';
 import Register from './pages/register/Register';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
           <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
+      <Toaster />
     </div>
   )
 }

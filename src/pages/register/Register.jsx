@@ -2,8 +2,24 @@ import React from 'react'
 import MainLayout from '../../components/MainLayout'
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
+import { signup } from '../../services/index/users';
+import toast from 'react-hot-toast';
 
 export default function Register() {
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: ({ name, email, password }) => {
+            return signup({ name, email, password })
+        },
+        onSuccess: (data) => {
+            console.log(data)
+        },
+        onError:(error)=>{
+            toast.error(error.message)
+            console.log(error.message)
+        }
+    })
 
     const { register, handleSubmit, formState: { errors, isValid }, watch } = useForm({
         defaultValues: {
@@ -16,7 +32,8 @@ export default function Register() {
     })
 
     const submitHandler = (data) => {
-        console.log(data)
+        const { name, email, password } = data;
+        mutate({ name, email, password })
     }
     return (
         <MainLayout>
@@ -117,7 +134,7 @@ export default function Register() {
                             className='font-semibold text-sm text-primary'
                         >Forgot password?</Link>
                         <button
-                            disabled={!isValid}
+                            disabled={!isValid || isPending}
                             type='submit'
                             className='bg-primary text-white font-bold text-lg py-4 px-8 rounded-lg w-full my-6 disabled:opacity-70 disabled:cursor-not-allowed'>
                             Register
