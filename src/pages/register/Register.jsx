@@ -1,25 +1,37 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import MainLayout from '../../components/MainLayout'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { signup } from '../../services/index/users';
 import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { userActions } from '../../store/reducers/userReducers';
 
 export default function Register() {
+    const dispatch = useDispatch()
+    const userState = useSelector(state => state.user)
+    const navigate = useNavigate()
 
     const { mutate, isPending } = useMutation({
         mutationFn: ({ name, email, password }) => {
             return signup({ name, email, password })
         },
         onSuccess: (data) => {
-            console.log(data)
+            dispatch(userActions.setUserInfo(data))
+            localStorage.setItem('account', JSON.stringify(data))
+            toast.success("User registiration successfully !")
         },
-        onError:(error)=>{
+        onError: (error) => {
             toast.error(error.message)
-            console.log(error.message)
         }
     })
+
+    useEffect(()=>{
+        if(userState.userInfo){
+            navigate("/")
+        }
+    }, [userState.userInfo])
 
     const { register, handleSubmit, formState: { errors, isValid }, watch } = useForm({
         defaultValues: {
