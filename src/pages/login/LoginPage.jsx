@@ -3,77 +3,54 @@ import MainLayout from '../../components/MainLayout'
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
-import { signup } from '../../services/index/users';
+import { login } from '../../services/index/users';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../../store/reducers/userReducers';
 
-export default function Register() {
+export default function LoginPage() {
     const dispatch = useDispatch()
     const userState = useSelector(state => state.user)
     const navigate = useNavigate()
 
     const { mutate, isPending } = useMutation({
-        mutationFn: ({ name, email, password }) => {
-            return signup({ name, email, password })
+        mutationFn: ({ email, password }) => {
+            return login({ email, password })
         },
         onSuccess: (data) => {
             dispatch(userActions.setUserInfo(data))
             localStorage.setItem('account', JSON.stringify(data))
-            toast.success("User registiration successfully !")
+            toast.success("User login successfully !")
         },
         onError: (error) => {
             toast.error(error.message)
         }
     })
 
-    useEffect(()=>{
-        if(userState.userInfo){
+    useEffect(() => {
+        if (userState.userInfo) {
             navigate("/")
         }
     }, [userState.userInfo])
 
-    const { register, handleSubmit, formState: { errors, isValid }, watch } = useForm({
+    const { register, handleSubmit, formState: { errors, isValid } } = useForm({
         defaultValues: {
-            name: "",
             email: "",
-            password: "",
-            confirmPassword: ""
+            password: ""
         },
         mode: "onChange"
     })
 
     const submitHandler = (data) => {
-        const { name, email, password } = data;
-        mutate({ name, email, password })
+        const { email, password } = data;
+        mutate({ email, password })
     }
     return (
         <MainLayout>
             <section className='container mx-auto px-5 py-10'>
                 <div className='w-full max-w-sm mx-auto'>
-                    <h1 className='font-roboto text-2xl font-bold text-center text-dark-hard mb-8'>Sign Up</h1>
+                    <h1 className='font-roboto text-2xl font-bold text-center text-dark-hard mb-8'>Login</h1>
                     <form onSubmit={handleSubmit(submitHandler)}>
-                        <div className='flex flex-col mb-6 w-full'>
-                            <label htmlFor="name" className='text-[#5a7184] font-semibold block'>Name</label>
-                            <input
-                                id="name"
-                                className={`placeholder:text-[#959ead] text-dark-hard mt-3 rounded-lg px-5 py-4 font-semibold block outline-none border ${errors.name ? "border-red-500" : "border-[#c3cad9]"}`}
-                                placeholder='Enter name'
-                                {...register("name", {
-                                    minLength: {
-                                        value: 2,
-                                        message: "Name length must be at least 2 characters"
-                                    },
-                                    required: {
-                                        value: true,
-                                        message: "Name is required"
-                                    }
-                                })}
-                            />
-                            {errors.name?.message && (
-                                <p className='text-red-500 text-xs mt-1'>{errors.name?.message}</p>
-                            )}
-                        </div>
                         <div className='flex flex-col mb-6 w-full'>
                             <label htmlFor="email" className='text-[#5a7184] font-semibold block'>Email</label>
                             <input
@@ -118,37 +95,18 @@ export default function Register() {
                                 <p className='text-red-500 text-xs mt-1'>{errors.password?.message}</p>
                             )}
                         </div>
-                        <div className='flex flex-col mb-6 w-full'>
-                            <label htmlFor="confirmPassword" className='text-[#5a7184] font-semibold block'>Confirm Password</label>
-                            <input
-                                id="confirmPassword"
-                                className={`placeholder:text-[#959ead] text-dark-hard mt-3 rounded-lg px-5 py-4 font-semibold block outline-none border ${errors.confirmPassword ? "border-red-500" : "border-[#c3cad9]"}`}
-                                placeholder='Enter confirm password'
-                                type='password'
-                                {...register("confirmPassword", {
-                                    required: {
-                                        value: true,
-                                        message: "Confirm Password is required"
-                                    },
-                                    validate: (value) => {
-                                        if (value !== watch("password")) {
-                                            return "Passwords do not match"
-                                        }
-                                    }
-                                })}
-                            />
-                            {errors.confirmPassword?.message && (
-                                <p className='text-red-500 text-xs mt-1'>{errors.confirmPassword?.message}</p>
-                            )}
-                        </div>
+                        <Link
+                            to="/forgot-password"
+                            className='font-semibold text-sm text-primary'
+                        >Forgot password?</Link>
                         <button
                             disabled={!isValid || isPending}
                             type='submit'
-                            className='bg-primary text-white font-bold text-lg py-4 px-8 rounded-lg w-full mb-6 disabled:opacity-70 disabled:cursor-not-allowed'>
-                            Register
+                            className='bg-primary text-white font-bold text-lg py-4 px-8 rounded-lg w-full my-6 disabled:opacity-70 disabled:cursor-not-allowed'>
+                            Sign in
                         </button>
                         <p className='text-sm font-semibold text-[#5a7184]'>
-                            You have an account? <Link to="/login" className='text-primary'>Login now</Link>
+                            Do not have an account? <Link to="/register" className='text-primary'>Register now</Link>
                         </p>
                     </form>
                 </div>
